@@ -1,15 +1,13 @@
 .footer {
-  position: absolute; /* Changed from absolute to fixed */
+  position: fixed;
   bottom: 0;
   left: 0;
-  right: 0; /* Ensures full width */
-  width: 100%; /* Changed from 100px to 100% */
-  height: 30px; /* Reduced from 500px to normal footer height */
+  width: 100%;
+  height: 30px;
   background-color: black;
-  text-align: center;
   color: white;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-
+  text-align: center;
+  line-height: 30px;
+  font-size: 14px;
+  z-index: 1000;
 }
