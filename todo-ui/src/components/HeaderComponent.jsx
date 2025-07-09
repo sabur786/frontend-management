@@ -1,78 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { isUserLoggedIn, logout } from '../services/AuthService';
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+import { isUserLoggedIn, logout } from '../services/AuthService'
+import { useNavigate } from 'react-router-dom'
 
 const HeaderComponent = () => {
-  const [isAuth, setIsAuth] = useState(isUserLoggedIn());
-  const navigator = useNavigate();
 
-  // useEffect(() => {
-  //   // Add a listener to storage changes in case another tab logs out
-  //   const handleStorageChange = () => {
-  //     setIsAuth(isUserLoggedIn());
-  //   };
+    const isAuth = isUserLoggedIn();
 
-  //   window.addEventListener('storage', handleStorageChange);
+    const navigator = useNavigate();
 
-  //   return () => {
-  //     window.removeEventListener('storage', handleStorageChange);
-  //   };
-  // }, []);
-
-  const handleLogout = () => {
-    logout();
-    setIsAuth(false);            // Update local state
-    navigator('/login');          // Redirect after logout
-  };
+    function handleLogout(){
+        logout();
+        navigator('/login')
+    }
 
   return (
-    <header>
-      <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-        <div>
-          <NavLink to="/" className="navbar-brand">
-            Todo Management Application
-          </NavLink>
-        </div>
+    <div>
+        <header>
+            <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
+                <div>
+                    <a href='http://localhost:3000' className='navbar-brand'>
+                        Todo Management Application
+                    </a>
+                </div>
+                <div className='collapse navbar-collapse'>
+                    <ul className='navbar-nav'>
 
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav me-auto">
-            {isAuth && (
-              <li className="nav-item">
-                <NavLink to="/todos" className="nav-link">
-                  Todos
-                </NavLink>
-              </li>
-            )}
-          </ul>
+                        {
+                            isAuth &&                         
+                            <li className='nav-item'>
+                            <NavLink to="/todos" className="nav-link">Todos</NavLink>
+                        </li>
+                        }
 
-          <ul className="navbar-nav ms-auto">
-            {!isAuth && (
-              <>
-                <li className="nav-item">
-                  <NavLink to="/login" className="nav-link">
-                    Login
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink to="/register" className="nav-link">
-                    Register
-                  </NavLink>
-                </li>
-              </>
-            )}
-            {isAuth && (
-              <li className="nav-item">
-                {/* Use button instead of NavLink since it's not a navigation route */}
-                <button onClick={handleLogout} className="btn btn-link nav-link">
-                  Logout
-                </button>
-              </li>
-            )}
-          </ul>
-        </div>
-      </nav>
-    </header>
-  );
-};
+                    </ul>
 
-export default HeaderComponent;
+                </div>
+                <ul className='navbar-nav'>
+                    {
+                        !isAuth &&                         
+                        <li className='nav-item'>
+                        <NavLink to="/register" className="nav-link">Register</NavLink>
+                    </li>
+                    }
+
+                    {
+                        !isAuth &&    
+                        <li className='nav-item'>
+                        <NavLink to="/login" className="nav-link">Login</NavLink>
+                    </li>
+                    }
+
+                    {
+                        isAuth &&    
+                        <li className='nav-item'>
+                        <NavLink to="/login" className="nav-link" onClick={handleLogout}>Logout</NavLink>
+                    </li>
+                    }
+
+                    </ul>
+            </nav>
+        </header>
+
+    </div>
+  )
+}
+
+export default HeaderComponent
